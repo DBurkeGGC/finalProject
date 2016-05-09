@@ -1,0 +1,20 @@
+<% provide(:title, "List") %>
+
+<h1>Feed Listing</h1>
+<p><%= link_to 'New Feed', new_feed_path %></p>
+<hr>
+<table>
+<% @myTable.each do |e|
+   Feedjira::Feed.add_common_feed_element 'image' 
+   feed = Feedjira::Feed.fetch_and_parse(e.url) %>
+   <tr>
+     <td>
+       <p><a href="<%= feed.entries.first.url %>"><%= feed.entries.first.title %></a>&nbsp&nbsp<b>[<%= e.ownership %>]</b>
+         &nbsp&nbsp<%= link_to 'Edit', edit_feed_path(e) %>&nbsp&nbsp<%= link_to 'Destroy', e, method: :delete, data: { confirm: 'Are you sure?' } %>
+       </p>
+       <p><%= feed.entries.first.published %></p>
+       <p><%= sanitize feed.entries.first.summary %></p><hr>
+     </td>
+   </tr>
+<% end %>
+</table>

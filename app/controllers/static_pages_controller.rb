@@ -1,8 +1,10 @@
 class StaticPagesController < ApplicationController
+  
   def home
   end
 
-  def help
+  def list
+    @myTable = Feed.where(:user_id => current_user.id)
   end
 
   def about
